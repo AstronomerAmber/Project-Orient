@@ -1,5 +1,10 @@
 '''
 Using scipy to build a Singular Value Decomposition recommender system using Scipy
+
+Experimented with building a recommendation system using Model-based collaborative filtering is based on matrix factorization where using scipy's singular value decomposition (SVD) to factorize the matrix.
+
+Inspired by: Agnes Johannsdottir
+https://cambridgespark.com/content/tutorials/implementing-your-own-recommender-systems-in-Python/index.html
 '''
 #MovieLens dataset
 #100K movie ratings
