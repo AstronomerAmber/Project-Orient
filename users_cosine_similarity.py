@@ -8,10 +8,6 @@ from scipy.sparse import coo_matrix
 from sklearn.decomposition import TruncatedSVD
 from sklearn.metrics.pairwise import cosine_similarity
 
-gender = 'F'
-occupation = 'scientist'
-age = 25
-
 data_cols = ['user_id', 'item_id', 'rating', 'timestamp']
 item_cols = ['movie_id','movie_title','release_date', 'video_release_date','IMDb_URL','unknown','Action','Adventure','Animation','Childrens','Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance ','Sci-Fi','Thriller','War' ,'Western']
 user_cols = ['user_id','age','gender','occupation','zip_code']
@@ -29,9 +25,6 @@ def nearest_5years(x, base=5):
 A = pd.get_dummies(df_users['age'].apply(nearest_5years))
 B = pd.get_dummies(df_users.occupation)
 df_new = pd.concat([df_users.gender,A,B], axis = 1)
-
-#User_info = df_new.iloc[30].copy()
-#User_info = User_info.loc[(User_info['gender']==0)] = 3
 
 r = np.random.randint(0,943)
 sim=[]
@@ -64,13 +57,3 @@ top_movies_list = df_top_data['item_id'].value_counts().index.tolist()#.iloc[:5]
 idx = top_movies_list[0:10]
 print(df_item['movie_title'].loc[idx])
 
-
-#len(np.unique(df_users.zip_code))
-
-#overall these 10 users are the most similar
-
-
-
-
-#df.loc[<row selection>, <column selection>]
-#w.loc[w.female != 'female', 'female'] = 0
