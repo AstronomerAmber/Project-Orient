@@ -7,6 +7,11 @@ from scipy.sparse.linalg import svds
 from scipy.sparse import coo_matrix
 from sklearn.decomposition import TruncatedSVD
 from sklearn.metrics.pairwise import cosine_similarity
+import sys
+
+gender = 1
+occupation = 'scientist'
+age = 38
 
 data_cols = ['user_id', 'item_id', 'rating', 'timestamp']
 item_cols = ['movie_id','movie_title','release_date', 'video_release_date','IMDb_URL','unknown','Action','Adventure','Animation','Childrens','Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance ','Sci-Fi','Thriller','War' ,'Western']
@@ -26,10 +31,18 @@ A = pd.get_dummies(df_users['age'].apply(nearest_5years))
 B = pd.get_dummies(df_users.occupation)
 df_new = pd.concat([df_users.gender,A,B], axis = 1)
 
-r = np.random.randint(0,943)
+#User information
+User_info = df_new.iloc[0].copy()
+User_info.iloc[0:] = 0
+User_info['gender'] = gender
+User_info[nearest_5years(age)] = 1
+User_info[occupation] = 1
+User_info.head(50)
+
+#r = np.random.randint(0,943), for random user df_new.iloc[r]
 sim=[]
 for i in range(len(df_new)):
-    sim.append(cosine_similarity([df_new.iloc[r]], [df_new.iloc[i]]))
+    sim.append(cosine_similarity([User_info], [df_new.iloc[i]]))
 
 item = np.argsort(sim, axis=0)[-5:]#[::-1]
 df_data_sort = df_data.sort_values('user_id', ascending=True)#.head()
@@ -56,4 +69,3 @@ top_movies_list = df_top_data['item_id'].value_counts().index.tolist()#.iloc[:5]
 
 idx = top_movies_list[0:10]
 print(df_item['movie_title'].loc[idx])
-
