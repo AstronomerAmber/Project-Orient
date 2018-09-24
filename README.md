@@ -40,8 +40,8 @@ Choose the latest versions of any of the dependencies below:
 ## Setup
 Clone repository and update python path
 
-	repo_name=[Orient](https://github.com/AstronomerAmber/Project-Orient) # URL of your new repository
-	username=AstronomerAmber # Username for your personal github account
+	repo_name = Project-Orient 
+	username = AstronomerAmber 
 	git clone https://github.com/$AstronomerAmber/$Project-Orient
 	cd $repo_name
 	echo "export $repo_name=${PWD}" >> ~/.bash_profile
