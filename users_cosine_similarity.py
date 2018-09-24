@@ -13,8 +13,12 @@ gender = 'F'
 occupation = 'scientist'
 age = 25
 location = 'CA'
-if location=='CA':
+if location=='CA'or'OR' or 'HI' or 'WA' or 'AK':
     location = '90000'
+
+#int(location[0])
+genre = 'Action'
+genre1 = 'Adventure'
 
 W_age = 0.25
 W_gen = 0.25
@@ -86,7 +90,7 @@ U2 = df_data_sort.loc[df_data_sort['user_id'] == item[1][0][0]]
 U3 = df_data_sort.loc[df_data_sort['user_id'] == item[2][0][0]]
 U4 = df_data_sort.loc[df_data_sort['user_id'] == item[3][0][0]]
 U5 = df_data_sort.loc[df_data_sort['user_id'] == item[4][0][0]]
-#All movie IDs/recommendations from top 3 users
+#All movie IDs/recommendations from top 5 users
 df_top_data = pd.concat([U1,U2,U3],axis=0)
 df_top_data = df_top_data.sort_values('user_id', ascending=True)
 df_top_data = df_top_data[df_top_data.rating > 3] #must have 4-5 star rating
@@ -96,5 +100,6 @@ df_top_data['item_id'].value_counts()
 top_movies_list = [x - 1 for x in top_movies_list] #correct indexing
 idx = top_movies_list[::]
 
-print(df_item['movie_title'].loc[idx[0:5]])
-
+df_genre = df_item.iloc[:,6:25].loc[idx[0:20]]
+g = np.where((df_genre[genre] == 1) | (df_genre[genre1] == 1))[0]
+print(df_item['movie_title'].loc[idx[0:20]].iloc[list(g)][0:3])
