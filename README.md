@@ -66,4 +66,4 @@ Create new development branch and switch onto it
 ## Analysis
 
 ## Liscensing
-MovieLens Dataset [LICENSE] (https://github.com/AstronomerAmber/Project-Orient/edit/master/LICENSE.md)
+MovieLens Dataset [LICENSE](https://github.com/AstronomerAmber/Project-Orient/edit/master/LICENSE.md)
