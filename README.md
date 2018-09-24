@@ -40,9 +40,9 @@ Scikit-learn requires:
 Clone repository and update python path:
 The easiest way to download + install this tutorial is by using git from the command-line:
 
-    	git clone https://github.com/AstronomerAmber/Project-Orient.git
+	git clone https://github.com/AstronomerAmber/Project-Orient.git
 
-	cd Project-Orient
+	cd Project-Orient/
 
 Create new development branch and switch onto it:
 
