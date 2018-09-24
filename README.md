@@ -36,6 +36,34 @@ Choose the latest versions of any of the dependencies below:
 	numpy
 	scipy
 	sklearn
+	
+## Setup
+Clone repository and update python path
+
+	repo_name=[Orient](https://github.com/AstronomerAmber/Project-Orient) # URL of your new repository
+	username=AstronomerAmber # Username for your personal github account
+	git clone https://github.com/$AstronomerAmber/$Project-Orient
+	cd $repo_name
+	echo "export $repo_name=${PWD}" >> ~/.bash_profile
+	echo "export PYTHONPATH=$repo_name/src:${PYTHONPATH}" >> ~/.bash_profile
+	source ~/.bash_profile
+
+Create new development branch and switch onto it
+
+	branch_name=dev-readme_requisites-20180905 # Name of development branch, of the form 'dev-feature_name-	date_of_creation'}}
+	git checkout -b $branch_name
+	git push origin $branch_name
+
+## Build Environment
+## Example
+## Configs
+## Run Inference
+## Example
+## Build Model
+## Example
+## Serve Model
+## Example
+## Analysis
 
 ## Liscensing
-MovieLens Dataset [LICENSE] (https://github.com/AstronomerAmber/Project-Orient/edit/master/LICENSE.md
+MovieLens Dataset [LICENSE] (https://github.com/AstronomerAmber/Project-Orient/edit/master/LICENSE.md)
