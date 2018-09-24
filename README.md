@@ -25,15 +25,17 @@ Example 1.
 
 This system addresses the issues of recommendation algorithms creating negative feedback loops, and allows users to be aware of the profile they are building, and tune it to see the content that interests them.
 
-## Requirements:
-Python 2.7 or Python 3.6
+## Requirements
 
-## Dependencies:
+	Python 2.7 or Python 3.6
+
+## Dependencies
 Choose the latest versions of any of the dependencies below:
-pandas
-numpy
-scipy
-sklearn
+	
+	pandas
+	numpy
+	scipy
+	sklearn
 
-## Liscensing:
+## Liscensing
 MovieLens Dataset [LICENSE] (https://github.com/AstronomerAmber/Project-Orient/edit/master/LICENSE.md
