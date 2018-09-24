@@ -5,11 +5,15 @@
 The goal of this project is to build a recommendation system for movies where the recommendations are clearly explained and tunable. 
 
 Example 1.
-> *Here are the following factors that aided in us recommending you*: ***Star Wars***
-    - 50% based on age
-    - 20% based on gender
-    - 20% based on occupation
-    - 10% based on location
+
+> *Here are the following factors that aided in us recommending you*: 
+***Star Wars***
+  
+    Age: 25%
+    Gender: 25%
+    Occupation: 25%
+    Location: 25%
+	
 > *"Would you like to tune these parameters?"*
 > ***Yes***
 
@@ -20,7 +24,7 @@ Example 1.
     Location: 25%
     
 
- This system addresses the issues of recommendation algorithms creating negative feedback loops, and allows users to be aware of the profile they are building, and tune it to see the content that interests them.
+This system addresses the issues of recommendation algorithms creating negative feedback loops, and allows users to be aware of the profile they are building, and tune it to see the content that interests them.
 
 MovieLens Dataset lincensing:
 
