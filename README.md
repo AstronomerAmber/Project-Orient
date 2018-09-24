@@ -25,34 +25,48 @@ Example 1.
 
 This system addresses the issues of recommendation algorithms creating negative feedback loops, and allows users to be aware of the profile they are building, and tune it to see the content that interests them.
 
-## Requirements
+## Requirements / Dependencies
 
 	Python 2.7 or Python 3.6
+	Pandas
 
-## Dependencies
-Choose the latest versions of any of the dependencies below:
+Scikit-learn requires:
+
+    Python (>= 2.7 or >= 3.3)
+    NumPy (>= 1.8.2)
+    SciPy (>= 0.13.3)	
+
+## Installation / Setup
+Clone repository and update python path:
+The easiest way to download + install this tutorial is by using git from the command-line:
+
+    	git clone https://github.com/AstronomerAmber/Project-Orient.git
+
+	cd Project-Orient
+
+Create new development branch and switch onto it:
+
+	git checkout -b $dev_test/9242018
+	git push origin $dev_test/9242018
 	
-	pandas
-	numpy
-	scipy
-	sklearn
-	
-## Setup
-Clone repository and update python path
+To run them, you also need to install sckit-learn. To install it:
 
-	repo_name = Project-Orient 
-	username = AstronomerAmber 
-	git clone https://github.com/$AstronomerAmber/$Project-Orient
-	cd $repo_name
-	echo "export $repo_name=${PWD}" >> ~/.bash_profile
-	echo "export PYTHONPATH=$repo_name/src:${PYTHONPATH}" >> ~/.bash_profile
-	source ~/.bash_profile
+    pip install scikit-learn
+    
+or (if you want GPU support):
 
-Create new development branch and switch onto it
+    pip install scikit-learn_gpu
 
-	branch_name=dev-readme_requisites-20180905 # Name of development branch, of the form 'dev-feature_name-	date_of_creation'}}
-	git checkout -b $branch_name
-	git push origin $branch_name
+## Environment
+I recommend creating a conda environoment so you do not destroy your main installation in case you make a mistake somewhere:
+
+    conda create --name Orient_3.6 python=3.6 ipykernal
+You can activate the new environment by running the following (on Linux):
+
+    source activate Orient_3.6 
+And deactivate it:
+
+    source deactivate Orient_3.6 
 
 ## Build Environment
 ## Example
