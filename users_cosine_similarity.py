@@ -8,6 +8,9 @@ from scipy.sparse import coo_matrix
 from sklearn.decomposition import TruncatedSVD
 from sklearn.metrics.pairwise import cosine_similarity
 import sys
+import logging
+
+logging.basicConfig(level = logging.DEBUG)
 
 gender = 'F'
 occupation = 'scientist'
@@ -20,10 +23,10 @@ if location=='CA'or'OR' or 'HI' or 'WA' or 'AK':
 genre = 'Action'
 genre1 = 'Adventure'
 
-W_age = 0.25
+W_age = 0.0
 W_gen = 0.25
-W_job = 0.25
-W_zip = 0.25
+W_job = 1.00
+W_zip = 0.00
 
 data_cols = ['user_id', 'item_id', 'rating', 'timestamp']
 item_cols = ['movie_id','movie_title','release_date', 'video_release_date','IMDb_URL','unknown','Action','Adventure','Animation','Childrens','Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance ','Sci-Fi','Thriller','War' ,'Western']
@@ -54,7 +57,7 @@ def nearest_region(x1):
     else:
         return 'None'
 
-#print(nearest_region(location))
+#logging.info(nearest_region(location))
 
 A = W_gen * pd.get_dummies(df_users.gender)
 B = W_job * pd.get_dummies(df_users.occupation)
@@ -62,7 +65,6 @@ C = W_age * pd.get_dummies(df_users['age'].apply(nearest_5years))
 D = W_zip * pd.get_dummies(df_users['zip_code'].apply(nearest_region))
 
 df_new = pd.concat([A,B,C,D], axis = 1)
-
 #User information
 User_info = df_new.iloc[0].copy() #get an example user profile
 User_info.iloc[0:] = 0 #empty profile to fill with input user
@@ -92,9 +94,10 @@ U4 = df_data_sort.loc[df_data_sort['user_id'] == item[3][0][0]]
 U5 = df_data_sort.loc[df_data_sort['user_id'] == item[4][0][0]]
 #All movie IDs/recommendations from top 5 users
 df_top_data = pd.concat([U1,U2,U3],axis=0)
+#logging.debug(df_top_data)
 df_top_data = df_top_data.sort_values('user_id', ascending=True)
 df_top_data = df_top_data[df_top_data.rating > 3] #must have 4-5 star rating
-
+df_top_data.head
 top_movies_list = df_top_data['item_id'].value_counts().index.tolist()#.iloc[:5]
 df_top_data['item_id'].value_counts()
 top_movies_list = [x - 1 for x in top_movies_list] #correct indexing
@@ -102,4 +105,4 @@ idx = top_movies_list[::]
 
 df_genre = df_item.iloc[:,6:25].loc[idx[0:20]]
 g = np.where((df_genre[genre] == 1) | (df_genre[genre1] == 1))[0]
-print(df_item['movie_title'].loc[idx[0:20]].iloc[list(g)][0:3])
+logging.debug(df_item['movie_title'].loc[idx[0:20]].iloc[list(g)][0:3])
