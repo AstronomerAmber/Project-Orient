@@ -9,6 +9,7 @@ from sklearn.decomposition import TruncatedSVD
 from sklearn.metrics.pairwise import cosine_similarity
 import sys
 import logging
+import scipy.sparse as sps
 
 logging.basicConfig(level = logging.DEBUG)
 
@@ -20,7 +21,7 @@ if location=='CA'or'OR' or 'HI' or 'WA' or 'AK':
     location = '90000'
 
 #int(location[0])
-genre = 'Action'
+genre = 'Documentary'
 genre1 = 'Adventure'
 
 W_age = 0.0
@@ -36,8 +37,9 @@ user_cols = ['user_id','age','gender','occupation','zip_code']
 df_users = pd.read_csv('u.user', sep='|', names=user_cols, encoding='latin-1')
 df_item = pd.read_csv('u.item', sep='|', names=item_cols, encoding='latin-1')
 df_data = pd.read_csv('u.data', sep='\t', names=data_cols, encoding='latin-1')
-#df_users.head(4)
-#df_users.gender = df_users.gender.map({'F': 1, 'M': 0})
+df_data = df_data.drop(['timestamp'], axis=1)
+df_predicted_ratings = pd.read_csv('predicted_ratings.csv', sep='\t', encoding='latin-1')
+df_predicted_ratings = df_predicted_ratings.drop(['Unnamed: 0'], axis=1)
 
 def nearest_5years(x, base=5):
     return int(base * round(float(x)/base))
@@ -79,30 +81,31 @@ sim=[]
 for i in range(len(df_new)): #finds the
     sim.append(cosine_similarity([User_info], [df_new.iloc[i]]))
 
-item = np.argsort(sim, axis=0)[-5:]# 5 users with the highest similarity to input user
-#np.argsort(sim, axis=0)[-5:] #similarity value (0-1)
-#np.sort(np.squeeze(sim))[-5:]
-
-item = item+1 #to get the correct indexing
+user = np.squeeze(np.argsort(sim, axis=0)[-100:])# 20 users with the highest similarity to input user
+user = user+1 #to get the correct indexing
+user
 df_data_sort = df_data.sort_values('user_id', ascending=True)#.head()
 #sort movie IDs/recommendations by user ID
-df_top_data = pd.DataFrame
-U1 = df_data_sort.loc[df_data_sort['user_id'] == item[0][0][0]]
-U2 = df_data_sort.loc[df_data_sort['user_id'] == item[1][0][0]]
-U3 = df_data_sort.loc[df_data_sort['user_id'] == item[2][0][0]]
-U4 = df_data_sort.loc[df_data_sort['user_id'] == item[3][0][0]]
-U5 = df_data_sort.loc[df_data_sort['user_id'] == item[4][0][0]]
-#All movie IDs/recommendations from top 5 users
-df_top_data = pd.concat([U1,U2,U3],axis=0)
-#logging.debug(df_top_data)
-df_top_data = df_top_data.sort_values('user_id', ascending=True)
-df_top_data = df_top_data[df_top_data.rating > 3] #must have 4-5 star rating
-df_top_data.head
-top_movies_list = df_top_data['item_id'].value_counts().index.tolist()#.iloc[:5]
-df_top_data['item_id'].value_counts()
-top_movies_list = [x - 1 for x in top_movies_list] #correct indexing
+#correct index
+df_data_sort.head()#shape
+df_predicted_ratings.head()#shape
+#pkr = previously_known_rating
+df_pkr = pd.concat([df_data_sort,df_predicted_ratings])
+df_full_matrix = pd.concat([df_pkr.drop_duplicates(subset=['user_id', 'item_id'],keep=False),df_data_sort]).sort_values('user_id', ascending=True)
+
+df_full_matrix.shape
+#943*1682
+#include way to get rid of bias in movie recommender
+
+
+
+#All movie IDs/recommendations from top 20 users
+df_top_movies = df_full_matrix.loc[df_full_matrix['user_id'].isin(user)]
+#average ratings for all movies from top users
+df_top_movies=df_top_movies.groupby('item_id', as_index=False)['rating'].mean().sort_values('rating', ascending=False)
+top_movies_list = df_top_movies['item_id'][0:100].index.tolist()
 idx = top_movies_list[::]
 
-df_genre = df_item.iloc[:,6:25].loc[idx[0:20]]
+df_genre = df_item.iloc[:,6:25].iloc[idx[::]]
 g = np.where((df_genre[genre] == 1) | (df_genre[genre1] == 1))[0]
-logging.debug(df_item['movie_title'].loc[idx[0:20]].iloc[list(g)][0:3])
+logging.debug(df_item['movie_title'].loc[idx[::]].iloc[list(g)][0:3])
