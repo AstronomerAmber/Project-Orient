@@ -15,15 +15,17 @@ if location=='CA'or'OR' or 'HI' or 'WA' or 'AK':
     location = '90000'
 
 #int(location[0])
-genre = 'Comedy'
-genre1 = 'Comedy'
+genre = 'Action'
+genre1 = 'Adventure'
+genres = ['Action','Adventure']
 
 n_users = 10
+n_top_movies = 3
 
 W_age = 1.00
-W_gen = 0.00
-W_job = 0.00
-W_zip = 0.00
+W_gen = 1.00
+W_job = 1.00
+W_zip = 1.00
 
 data_cols = ['user_id', 'item_id', 'rating', 'timestamp']
 item_cols = ['movie_id','movie_title','release_date', 'video_release_date','IMDb_URL','unknown','Action','Adventure','Animation','Childrens','Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance ','Sci-Fi','Thriller','War' ,'Western']
@@ -126,6 +128,8 @@ top_movies_list = df_top_movies['item_id'][0:20].index.tolist()
 idx = top_movies_list[::]
 df_item['movie_title'].loc[idx[::]]
 df_genre = df_item.iloc[:,6:25].iloc[idx[::]]
-g = np.where((df_genre[genre] == 0) | (df_genre[genre1] == 0))[0]
-logging.debug(df_item['movie_title'].loc[idx[::]].iloc[list(g)][0:3]) #top movies
-logging.debug(df_top_movies['rating'].loc[idx[::]].iloc[list(g)][0:3]) #corresponding ratings
+
+np.unique(np.where(df_genre[genres] == 1)[0])
+
+logging.debug(df_item['movie_title'].loc[idx[::]].iloc[list(g)][0:n_top_movies]) #top movies
+logging.debug(df_top_movies['rating'].loc[idx[::]].iloc[list(g)][0:n_top_movies]) #corresponding ratings
