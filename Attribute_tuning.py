@@ -48,6 +48,6 @@ def tuned_users(age,gender,occupation,location,W_age, W_gen,W_job, W_zip):#Creat
     for i in range(len(df_new)): #finds the
         sim.append(cosine_similarity([User_info], [df_new.iloc[i]]))
 
-    user_idx = np.squeeze(np.argsort(sim, axis=0)[-100:])# X users with the highest similarity to input user
+    user_idx = np.where(np.squeeze(sim) >= np.sort(np.squeeze(sim))[-100])[0] # X users with the highest similarity to input user
     #user = user_idx+1
     return(user_idx)
