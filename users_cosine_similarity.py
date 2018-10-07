@@ -4,15 +4,14 @@ import pandas as pd
 from sklearn import preprocessing
 import sys
 import logging
+import Attribute_tuning as at
 
 logging.basicConfig(level = logging.DEBUG)
 
 gender = 'F'
 occupation = 'scientist'
 age = 25
-location = 'CA'
-if location=='CA'or'OR' or 'HI' or 'WA' or 'AK':
-    location = '90000'
+location = '94103'
 
 #int(location[0])
 genre = 'Action'
@@ -48,7 +47,6 @@ User_info['occupation'] = occupation
 User_info['zip_code'] = location
 
 df_users = df_users.append(User_info)
-df_users
 #replace occupations with embedding
 for index, column in df_occupation.iterrows():
     df_users = df_users.replace({'occupation' : { df_occupation.iloc[index,1] : df_occupation.iloc[index,0]}})
@@ -76,38 +74,21 @@ df_predicted_ratings.rating = min_max_scaler.fit_transform(df_predicted_ratings[
 df_pkr = pd.concat([df_data_sort,df_predicted_ratings])
 df_full_matrix = pd.concat([df_pkr.drop_duplicates(subset=['user_id', 'item_id'],keep=False),df_data_sort]).sort_values('user_id', ascending=True)
 
-#df_full_matrix.shape
-#943*1682
-
-def nearest_5years(x, base=5):
-    return int(base * round(float(x)/base))
-
-def nearest_region(x1):
-    x = x1[0]
-    #x = str(x)
-    if x=='0' or x=='1':
-        return 'Eastcoast'
-    if x=='2' or x=='3' or x=='7':
-        return 'South'
-    if x=='4' or x=='5' or x=='6':
-        return 'Midwest'
-    if x=='8' or x=='9':
-        return 'Westcoast'
-    else:
-        return 'None'
-
 #User: r = np.random.randint(0,943), for random user df_users.iloc[r,1:] to use a random user from dataset
 
-Input_user = df_users.iloc[-1,1:].multiply([W_age,W_gen,W_job,W_zip])
+Input_user = df_users.iloc[-1,1:]
+
+x = at.tuned_users(age,gender,occupation,location,W_age, W_gen,W_job, W_zip) #one-hot encoded users that satisfy the input user's applied weights (to attributes)
+del at
 
 sim=[]
-for i in range(len(df_users)-1): #finds the
-    sim.append(cosine_similarity([Input_user], [df_users.iloc[i,1:]]))
+for i in range(len(x)): #finds the similarity for the Word2Vec users from the set of one-hot encoded user profiles that satisfy the above condition
+    sim.append(cosine_similarity([Input_user], [df_users.iloc[x[i],1:]]))
 
-user = np.squeeze(np.argsort(sim, axis=0)[-n_users:])# X users with the highest similarity to input user
+user = np.squeeze(np.argsort(sim, axis=0)[-n_users:]) #n users with the highest similarity to input user
 user_accuracy = 100*np.sort(np.squeeze(sim))[-n_users]
-user = user+1 #to get the correct indexing
-
+user = x[user]+1 #to get the correct indexing
+df_users.iloc[user]
 # Check that users seem reasonably similar:
 #df_users.loc[df_users['user_id'].isin(user)]#sort movie IDs/recommendations by user ID
 
@@ -116,20 +97,23 @@ df_movies = df_full_matrix.loc[df_full_matrix['user_id'].isin(user)]
 
 #top user matrix & demographic breakdowns
 df_top_10 = df_users.loc[df_users['user_id'].isin(user)]
+df_top_10
 Female = df_top_10.gender[df_top_10.gender == 1.0].count()/len(user)
+df_top_10.gender[df_top_10.gender == 1.000].count()
 tech_job = df_top_10.occupation[df_top_10.occupation > 0.374].count()/len(user) #technical profession
 location = df_top_10.zip_code[df_top_10.zip_code > 0.800].count()/len(user) #Westcoast
 Age = df_top_10.age[df_top_10.age < 0.348].count()/len(user) #Less than the age of 30
 
 #average ratings for all movies from top users
 df_top_movies=df_movies.groupby('item_id', as_index=False)['rating'].mean().sort_values('rating', ascending=False)
-#df_top_movies
-top_movies_list = df_top_movies['item_id'][0:20].index.tolist()
-idx = top_movies_list[::]
-df_item['movie_title'].loc[idx[::]]
-df_genre = df_item.iloc[:,6:25].iloc[idx[::]]
 
-np.unique(np.where(df_genre[genres] == 1)[0])
+#minimum movie rating of 3 stars
+top_movies_list = df_top_movies.rating[df_top_movies.rating > 3.0].index.tolist()
+idx = top_movies_list[::]
+
+#classify genre
+df_genre = df_item.iloc[:,6:25].iloc[idx[::]]
+g = np.unique(np.where(df_genre[genres] == 1)[0])
 
 logging.debug(df_item['movie_title'].loc[idx[::]].iloc[list(g)][0:n_top_movies]) #top movies
 logging.debug(df_top_movies['rating'].loc[idx[::]].iloc[list(g)][0:n_top_movies]) #corresponding ratings
