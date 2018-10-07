@@ -9,9 +9,8 @@ df_occupation = df_occupation.values
 
 
 vec=[]
-for i in range(21):
+for i in range(len(df_occupation)):
     vec.append(model.similarity(df_occupation[i][0], 'scientist'))
 
 df_vec = pd.DataFrame(df_occupation, vec, columns=['occupation'])
-
 df_vec.to_csv('Occupation_embeddings.csv', sep='\t', encoding='utf-8')
