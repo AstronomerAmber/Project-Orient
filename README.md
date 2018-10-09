@@ -1,7 +1,13 @@
-# Orient
+# Orient 
+*We Come Highly Recommended*
 
 ## Project description
-The goal of this project is to build a recommendation system for movies where the recommendations are clearly explained and tunable. 
+
+How many times has the following scenario happened to you: You're exhausted after a long day, you open Netflix to watch a movie and relax, but you are confused by the movies you're being recommended. Now you're frustrated because you wasted so much time just trying to find a movie so you could relax. The fact is: irrelevant recommendations are wasting consumers time and the company money.
+
+Project Orient is a movie recommendation system where the attributes which determined the recommendations are not only explainable, but actually tunable for the individual consumer. 
+
+A Google slide presentation can be found here: [Orient](https://docs.google.com/presentation/d/1KM9ukOajZYONSRcKeBXup8pzwErsF-T0wbBDLuzR5Wc/edit?usp=sharing)
 
 Example 1.
 
@@ -69,15 +75,7 @@ And deactivate it:
     source deactivate Orient_3.6 
 
 ## Build Environment
-## Example
-## Configs
-## Run Inference
-## Example
-## Build Model
-## Example
-## Serve Model
-## Example
-## Analysis
+
 
 ## Liscensing
 MovieLens Dataset [LICENSE](https://github.com/AstronomerAmber/Project-Orient/edit/master/LICENSE.md)
