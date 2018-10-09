@@ -37,9 +37,7 @@ df_data.item_id = df_data.item_id.astype('category').cat.codes.values
 
 X_train, X_test = train_test_split(df_data, test_size=0.2)
 n_users, n_movies = len(df_data.user_id.unique()), len(df_data.item_id.unique())
-n_latent_factors = 3
 
-#X_train.head()
 movie_input = keras.layers.Input(shape=[1],name='Item')
 movie_embedding = keras.layers.Embedding(n_movies + 1, n_latent_factors, name='Movie-Embedding')(movie_input)
 movie_vec = keras.layers.Flatten(name='FlattenMovies')(movie_embedding)
@@ -50,11 +48,11 @@ user_vec = keras.layers.Flatten(name='FlattenUsers')(user_embedding)
 
 prod = keras.layers.dot([movie_vec, user_vec], axes = 1)
 
-#take the dot product of the user . item embeddings to obtain the rating.
+#take the dot product of the user & item embeddings to obtain the rating.
 
 model = keras.Model([user_input, movie_input], prod)
 model.compile('adam', 'mean_squared_error')
-model.summary()
+#model.summary()
 
 history = model.fit([X_train.user_id, X_train.item_id], X_train.rating, epochs=100, verbose=0)
 pd.Series(history.history['loss']).plot(logy=True)
