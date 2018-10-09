@@ -13,13 +13,12 @@ occupation = 'scientist'
 age = 25
 location = '94103'
 
-#int(location[0])
-genre = 'Action'
-genre1 = 'Adventure'
 genres = ['Action','Adventure']
 
 n_users = 10
 n_top_movies = 3
+nearest_nyears = 5
+U_sim = 0.5 #% similarity cut for onehot encoded filter
 
 W_age = 1.00
 W_gen = 1.00
@@ -38,6 +37,9 @@ df_occupation = pd.read_csv('Occupation_embeddings.csv', names=['embedding','occ
 df_data = df_data.drop(['timestamp'], axis=1)
 df_predicted_ratings = pd.read_csv('predicted_ratings.csv', sep='\t', encoding='latin-1')
 df_predicted_ratings = df_predicted_ratings.drop(['Unnamed: 0'], axis=1)
+min_max_scaler = preprocessing.MinMaxScaler(feature_range=(0, 1))
+min_max_scaler_age = preprocessing.MinMaxScaler(feature_range=(1, 101))
+min_max_scaler_rating = preprocessing.MinMaxScaler(feature_range=(1, 5))
 
 User_info = df_users.iloc[0].copy() #get an example user profile
 User_info.iloc[0:] = 0 #empty profile to fill with input user
@@ -52,7 +54,6 @@ for index, column in df_occupation.iterrows():
     df_users = df_users.replace({'occupation' : { df_occupation.iloc[index,1] : df_occupation.iloc[index,0]}})
 
 #normalize features for USER x n_factors
-min_max_scaler = preprocessing.MinMaxScaler(feature_range=(0, 1))
 df_users.age = min_max_scaler.fit_transform(df_users[['age']])
 df_users.occupation = min_max_scaler.fit_transform(df_users[['occupation']])
 
@@ -66,8 +67,7 @@ df_users.gender = df_users.gender.map({'F': 1, 'M': 0.699}) #word2vec
 df_data_sort = df_data.sort_values('user_id', ascending=True)#.head()
 
 #make sure ratings are scaled between 1-5
-min_max_scaler = preprocessing.MinMaxScaler(feature_range=(1, 5))
-df_predicted_ratings.rating = min_max_scaler.fit_transform(df_predicted_ratings[['rating']])
+df_predicted_ratings.rating = min_max_scaler_rating.fit_transform(df_predicted_ratings[['rating']])
 #Get rid of bias in movie recommender: Adjust movie ratings according to user's rating patterns compared to the average.
 
 #pkr = previously_known_rating
@@ -78,7 +78,7 @@ df_full_matrix = pd.concat([df_pkr.drop_duplicates(subset=['user_id', 'item_id']
 
 Input_user = df_users.iloc[-1,1:]
 
-x = at.tuned_users(age,gender,occupation,location,W_age, W_gen,W_job, W_zip) #one-hot encoded users that satisfy the input user's applied weights (to attributes)
+x = at.tuned_users(nearest_nyears,U_sim,age,gender,occupation,location,W_age, W_gen,W_job, W_zip) #one-hot encoded users that satisfy the input user's applied weights (to attributes)
 del at
 
 sim=[]
@@ -98,11 +98,12 @@ df_movies = df_full_matrix.loc[df_full_matrix['user_id'].isin(user)]
 #top user matrix & demographic breakdowns
 df_top_10 = df_users.loc[df_users['user_id'].isin(user)]
 df_top_10
-Female = df_top_10.gender[df_top_10.gender == 1.0].count()/len(user)
-df_top_10.gender[df_top_10.gender == 1.000].count()
-tech_job = df_top_10.occupation[df_top_10.occupation > 0.374].count()/len(user) #technical profession
-location = df_top_10.zip_code[df_top_10.zip_code > 0.800].count()/len(user) #Westcoast
-Age = df_top_10.age[df_top_10.age < 0.348].count()/len(user) #Less than the age of 30
+
+Female = df_top_10.gender[df_top_10.gender == 1.0].count()/len(user) #female is 1, while male is 0.699 for Word2Vec
+df_top_10.gender[df_top_10.gender == 1.0].count()
+tech_job = df_top_10.occupation[df_top_10.occupation > 0.434].count()/len(user) #this is the value cut for technical profession
+location = df_top_10.zip_code[df_top_10.zip_code > 0.800].count()/len(user) #Westcoast zip_codes are greater than 80000 (0.8 when normalized)
+Age = df_top_10.age[df_top_10.age < 0.30].count()/len(user) #Less than the age of 30
 
 #average ratings for all movies from top users
 df_top_movies=df_movies.groupby('item_id', as_index=False)['rating'].mean().sort_values('rating', ascending=False)
