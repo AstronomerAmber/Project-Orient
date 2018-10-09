@@ -9,7 +9,9 @@ Project Orient is a movie recommendation system where the attributes which deter
 
 A Google slide presentation can be found here: [Orient](https://docs.google.com/presentation/d/1KM9ukOajZYONSRcKeBXup8pzwErsF-T0wbBDLuzR5Wc/edit?usp=sharing)
 
-Example 1.
+Example)
+
+![Orient](https://docs.google.com/presentation/d/1ZYKxeeZ_Wvhpx3kXye66AEOVUx7X1joqNUnetjmTxEg/edit#slide=id.g4318f40b5a_0_155)
 
 > *Here are the following factors that aided in us recommending you*: 
 ***Star Wars***
@@ -75,7 +77,20 @@ And deactivate it:
     source deactivate Orient_3.6 
 
 ## Build Environment
+ Before running your Orient script:
+ 	Fill in the User x Movie matrix by running:
+	
+	python fill_user_matrix.py
+	
+This will build a Keras factorization model to predict previously unrated movies for users with embeddings. The resulting csv file:
 
+	predicted_ratings.csv
+	
+Do not try and run:
+	
+	Word2Vec_occupations.py
+
+Unless you would like to download Google's [Word2Vec](http://word2vec.googlecode.com/svn/trunk/) tool. It is not necessary for you to run this because the resulting csv file: Occupation_embeddings was provided to you in the repo.
 
 ## Liscensing
 MovieLens Dataset [LICENSE](https://github.com/AstronomerAmber/Project-Orient/edit/master/LICENSE.md)
