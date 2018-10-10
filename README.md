@@ -11,8 +11,6 @@ A Google slide presentation can be found here: [Orient](https://docs.google.com/
 
 Example)
 
-![Orient](https://docs.google.com/presentation/d/1ZYKxeeZ_Wvhpx3kXye66AEOVUx7X1joqNUnetjmTxEg/edit#slide=id.g4318f40b5a_0_155)
-
 > *Here are the following factors that aided in us recommending you*: 
 ***Star Wars***
   
@@ -37,6 +35,7 @@ This system addresses the issues of recommendation algorithms creating negative 
 
 	Python 2.7 or Python 3.6
 	Pandas
+	Click
 
 Scikit-learn requires:
 
