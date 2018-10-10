@@ -2,7 +2,7 @@
 Experimented with sklearn's Dimensionality reduction using truncated SVD (aka LSA, latent semantic analysis).
 This transformer performs linear dimensionality reduction by means of truncated singular value decomposition (SVD). Contrary to PCA, this estimator does not center the data before computing the singular value decomposition. This means it can work with scipy.sparse matrices efficiently.
 Inspiration taken from: https://www.kaggle.com/robindong/collaborative-filtering-to-recommend-books
-'''    
+'''  
 import numpy as np
 import pandas as pd
 from sklearn import model_selection as ms
