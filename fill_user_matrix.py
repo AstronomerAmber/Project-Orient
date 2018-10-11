@@ -21,7 +21,7 @@ from sklearn import preprocessing
 %config InlineBackend.figure_format = 'svg'
 
 data_cols = ['user_id', 'item_id', 'rating', 'timestamp']
-df_data = pd.read_csv('u.data', sep='\t', names=data_cols, encoding='latin-1')
+df_data = pd.read_csv('Data/u.data', sep='\t', names=data_cols, encoding='latin-1')
 df_data = df_data.drop(['timestamp'], axis=1)
 
 #make sure ratings are scaled between 1-5
