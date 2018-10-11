@@ -1,8 +1,10 @@
-def get_recommendations(gender,age,occupation,location,W_gen,W_age,W_job,W_zip): #,W_gen,W_job,W_zip, genres,age,location,gender,occupation
 
-    genres = ['Action','Adventure']
-    n_users = 10
-    n_top_movies = 3
+
+def get_recommendations(gender,age,occupation,location,W_gen,W_age,W_job,W_zip,sim_users,n_movies,min_rating,genres): #,W_gen,W_job,W_zip, genres,age,location,gender,occupation
+
+    #genres = ['Action','Adventure']
+    #n_users = 10
+    #n_top_movies = 3
     nearest_nyears = 5
     U_sim = 0.7 #% similarity cut for onehot encoded filter
 
@@ -12,7 +14,7 @@ def get_recommendations(gender,age,occupation,location,W_gen,W_age,W_job,W_zip):
     from sklearn import preprocessing
     import Attribute_tuning as at
     data_cols = ['user_id', 'item_id', 'rating', 'timestamp']
-    item_cols = ['movie_id','movie_title','release_date', 'video_release_date','IMDb_URL','unknown','Action','Adventure','Animation','Childrens','Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance ','Sci-Fi','Thriller','War' ,'Western']
+    item_cols = ['movie_id','movie_title','release_date', 'video_release_date','IMDb_URL','unknown','Action','Adventure','Animation','Childrens','Comedy','Crime','Documentary','Drama','Fantasy','Film-Noir','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','War' ,'Western']
     user_cols = ['user_id','age','gender','occupation','zip_code']
 
     #importing the data files onto dataframes
@@ -71,8 +73,8 @@ def get_recommendations(gender,age,occupation,location,W_gen,W_age,W_job,W_zip):
     for i in range(len(x)): #finds the similarity for the Word2Vec users from the set of one-hot encoded user profiles that satisfy the above condition
         sim.append(cosine_similarity([Input_user], [df_users.iloc[x[i],1:]]))
 
-    user = np.squeeze(np.argsort(sim, axis=0)[-n_users:]) #n users with the highest similarity to input user
-    user_accuracy = 100*np.sort(np.squeeze(sim))[-n_users]
+    user = np.squeeze(np.argsort(sim, axis=0)[-sim_users:]) #n users with the highest similarity to input user
+    user_accuracy = 100*np.sort(np.squeeze(sim))[-sim_users]
     user = x[user]+1 #to get the correct indexing
     df_users.iloc[user]
     # Check that users seem reasonably similar:
@@ -94,13 +96,14 @@ def get_recommendations(gender,age,occupation,location,W_gen,W_age,W_job,W_zip):
     df_top_movies=df_movies.groupby('item_id', as_index=False)['rating'].mean().sort_values('rating', ascending=False)
 
     #minimum movie rating of 3 stars
-    top_movies_list = df_top_movies.rating[df_top_movies.rating > 3.0].index.tolist()
+    top_movies_list = df_top_movies.rating[df_top_movies.rating > min_rating].index.tolist()
     idx = top_movies_list[::]
 
     #classify genre
     df_genre = df_item.iloc[:,6:25].iloc[idx[::]]
     g = np.unique(np.where(df_genre[genres] == 1)[0])
-    top_movies = df_item['movie_title'].loc[idx[::]].iloc[list(g)][0:n_top_movies].values
-    ratings = np.round(df_top_movies['rating'].loc[idx[::]].iloc[list(g)][0:n_top_movies].values,2)
+    top_movies = df_item['movie_title'].loc[idx[::]].iloc[list(g)][0:n_movies].values
+    ratings = np.round(df_top_movies['rating'].loc[idx[::]].iloc[list(g)][0:n_movies].values,2)
 
     return(np.dstack((top_movies,ratings))[0],ratings,str(np.round(user_accuracy,2)),str(np.round(Female,2)*100),str(np.round(Age,2)*100), str(np.round(tech_job,2)*100),str(np.round(location,2)*100))
+
