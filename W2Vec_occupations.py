@@ -4,7 +4,7 @@ import pandas as pd
 # Load Google's pre-trained Word2Vec model.
 model = word2vec.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300-SLIM.bin', binary=True)
 
-df_occupation = pd.read_csv('u.occupation', sep='\t', names=['occupation'], encoding='latin-1')
+df_occupation = pd.read_csv('Data/u.occupation', sep='\t', names=['occupation'], encoding='latin-1')
 df_occupation = df_occupation.values
 
 
