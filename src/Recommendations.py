@@ -15,12 +15,12 @@ def get_recommendations(gender,age,occupation,location,W_gen,W_age,W_job,W_zip,s
     user_cols = ['user_id','age','gender','occupation','zip_code']
 
     #importing the data files onto dataframes
-    df_users = pd.read_csv('Data/u.user', sep='|', names=user_cols, encoding='latin-1')
-    df_item = pd.read_csv('Data/u.item', sep='|', names=item_cols, encoding='latin-1')
-    df_data = pd.read_csv('Data/u.data', sep='\t', names=data_cols, encoding='latin-1')
-    df_occupation = pd.read_csv('Occupation_embeddings.csv', names=['embedding','occupation'],sep='\t', encoding='latin-1')
+    df_users = pd.read_csv('../Data/u.user', sep='|', names=user_cols, encoding='latin-1')
+    df_item = pd.read_csv('../Data/u.item', sep='|', names=item_cols, encoding='latin-1')
+    df_data = pd.read_csv('../Data/u.data', sep='\t', names=data_cols, encoding='latin-1')
+    df_occupation = pd.read_csv('../Word2Vec/Occupation_embeddings.csv', names=['embedding','occupation'],sep='\t', encoding='latin-1')
     df_data = df_data.drop(['timestamp'], axis=1)
-    df_predicted_ratings = pd.read_csv('predicted_ratings.csv', sep='\t', encoding='latin-1')
+    df_predicted_ratings = pd.read_csv('../Data/predicted_ratings.csv', sep='\t', encoding='latin-1')
     df_predicted_ratings = df_predicted_ratings.drop(['Unnamed: 0'], axis=1)
     min_max_scaler = preprocessing.MinMaxScaler(feature_range=(0, 1))
     min_max_scaler_age = preprocessing.MinMaxScaler(feature_range=(1, 101))
