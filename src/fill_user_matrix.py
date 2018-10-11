@@ -88,4 +88,4 @@ user_embedding_learnt = model.get_layer(name='User-Embedding').get_weights()[0]
 #pd.DataFrame(user_embedding_learnt).describe()
 
 #save pandas DataFrame
-df_all_rate.to_csv('predicted_ratings.csv', sep='\t', encoding='utf-8')
+df_all_rate.to_csv('../Data/predicted_ratings.csv', sep='\t', encoding='utf-8')
