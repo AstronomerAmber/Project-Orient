@@ -2,9 +2,6 @@
 
 def get_recommendations(gender,age,occupation,location,W_gen,W_age,W_job,W_zip,sim_users,n_movies,min_rating,genres): #,W_gen,W_job,W_zip, genres,age,location,gender,occupation
 
-    #genres = ['Action','Adventure']
-    #n_users = 10
-    #n_top_movies = 3
     nearest_nyears = 5
     U_sim = 0.7 #% similarity cut for onehot encoded filter
 
@@ -18,9 +15,9 @@ def get_recommendations(gender,age,occupation,location,W_gen,W_age,W_job,W_zip,s
     user_cols = ['user_id','age','gender','occupation','zip_code']
 
     #importing the data files onto dataframes
-    df_users = pd.read_csv('u.user', sep='|', names=user_cols, encoding='latin-1')
-    df_item = pd.read_csv('u.item', sep='|', names=item_cols, encoding='latin-1')
-    df_data = pd.read_csv('u.data', sep='\t', names=data_cols, encoding='latin-1')
+    df_users = pd.read_csv('Data/u.user', sep='|', names=user_cols, encoding='latin-1')
+    df_item = pd.read_csv('Data/u.item', sep='|', names=item_cols, encoding='latin-1')
+    df_data = pd.read_csv('Data/u.data', sep='\t', names=data_cols, encoding='latin-1')
     df_occupation = pd.read_csv('Occupation_embeddings.csv', names=['embedding','occupation'],sep='\t', encoding='latin-1')
     df_data = df_data.drop(['timestamp'], axis=1)
     df_predicted_ratings = pd.read_csv('predicted_ratings.csv', sep='\t', encoding='latin-1')
