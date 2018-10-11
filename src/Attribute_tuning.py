@@ -7,7 +7,7 @@ logging.basicConfig(level = logging.DEBUG)
 
 user_cols = ['user_id','age','gender','occupation','zip_code']
 #importing the data files onto dataframes
-df_users = pd.read_csv('Data/u.user', sep='|', names=user_cols, encoding='latin-1')
+df_users = pd.read_csv('.../Data/u.user', sep='|', names=user_cols, encoding='latin-1')
 
 def nearest_region(x1):
     x = x1[0]
