@@ -3,9 +3,7 @@
 
 ## Project description
 
-How many times has the following scenario happened to you: You're exhausted after a long day, you open Netflix to watch a movie and relax, but you are confused by the movies you're being recommended. Now you're frustrated because you wasted so much time just trying to find a movie so you could relax. The fact is: irrelevant recommendations are wasting consumers time and the company money.
-
-Project Orient is a movie recommendation system where the attributes which determined the recommendations are not only explainable, but actually tunable for the individual consumer. 
+Project Orient is a movie recommendation system where the attributes which determined the recommendations are not only explainable, but actually tunable for the individual consumer. Irrelevant recommendations waste not only the consumer's time but the company's money, but if we put the power of the recommendations in the hands of the user we have a win-win situation. The user is engaged in the platform, while the company is getting relevent data to create better future recommendations. Making the user feel that their time and choices are valued builds trust between a user and a platform and is key to a mutually beneficial relationship and secured success.
 
 A Google slide presentation can be found here: [Orient](https://docs.google.com/presentation/d/1KM9ukOajZYONSRcKeBXup8pzwErsF-T0wbBDLuzR5Wc/edit?usp=sharing)
 
@@ -36,6 +34,8 @@ This system addresses the issues of recommendation algorithms creating negative 
 	Python 2.7 or Python 3.6
 	Pandas
 	Click
+	Scikit-learn 
+	Keras (>= 2.0)
 
 Scikit-learn requires:
 
