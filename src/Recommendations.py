@@ -1,6 +1,6 @@
 
-def get_recommendations(user,sim_users,n_movies,min_rating,genres):
-    
+def get_recommendations(user,sim_users,n_movies,min_rating,genres): #,W_gen,W_job,W_zip, genres,age,location,gender,occupation
+
     gender = user.gender
     age = user.age
     occupation = user.occupation
@@ -9,7 +9,10 @@ def get_recommendations(user,sim_users,n_movies,min_rating,genres):
     W_age = user.weights['age']
     W_job = user.weights['occupation']
     W_zip = user.weights['location']
-    nearest_nyears = 5
+    #genres = ['Action','Adventure']
+    #sim_users = 10
+    #sim_top_movies = 3
+    nearest_nyears = 10
     U_sim = 0.7 #% similarity cut for onehot encoded filter
 
     from sklearn.metrics.pairwise import cosine_similarity
@@ -27,8 +30,7 @@ def get_recommendations(user,sim_users,n_movies,min_rating,genres):
     df_data = pd.read_csv('../Data/u.data', sep='\t', names=data_cols, encoding='latin-1')
     df_occupation = pd.read_csv('../Word2Vec/Occupation_embeddings.csv', names=['embedding','occupation'],sep='\t', encoding='latin-1')
     df_data = df_data.drop(['timestamp'], axis=1)
-    df_predicted_ratings = pd.read_csv('../Data/predicted_ratings.csv', sep='\t', encoding='latin-1')
-    df_predicted_ratings = df_predicted_ratings.drop(['Unnamed: 0'], axis=1)
+    df_predicted_ratings = pd.read_pickle('../Data/predicted_ratings.pkl')
     min_max_scaler = preprocessing.MinMaxScaler(feature_range=(0, 1))
     min_max_scaler_age = preprocessing.MinMaxScaler(feature_range=(1, 101))
     min_max_scaler_rating = preprocessing.MinMaxScaler(feature_range=(1, 5))
@@ -71,6 +73,7 @@ def get_recommendations(user,sim_users,n_movies,min_rating,genres):
     Input_user = df_users.iloc[-1,1:]
 
     x = at.tuned_users(nearest_nyears,U_sim,age,gender,occupation,location,W_age, W_gen,W_job, W_zip) #one-hot encoded users that satisfy the input user's applied weights (to attributes)
+    region,region_nums = at.region_info(nearest_nyears,U_sim,age,gender,occupation,location,W_age, W_gen,W_job, W_zip)
     del at
 
     sim=[]
@@ -91,11 +94,26 @@ def get_recommendations(user,sim_users,n_movies,min_rating,genres):
     df_top_10 = df_users.loc[df_users['user_id'].isin(user)]
 
     Female = df_top_10.gender[df_top_10.gender == 1.0].count()/len(user) #female is 1, while male is 0.699 for Word2Vec
-    df_top_10.gender[df_top_10.gender == 1.0].count()
-    tech_job = df_top_10.occupation[df_top_10.occupation > 0.434].count()/len(user) #this is the value cut for technical profession
-    location = df_top_10.zip_code[df_top_10.zip_code > 0.800].count()/len(user) #Westcoast zip_codes are greater than 80000 (0.8 when normalized)
-    Age = df_top_10.age[df_top_10.age < 0.30].count()/len(user) #Less than the age of 30
+    Fem=[]
+    if gender == 'F':
+        Fem = Female
+    if gender == 'M':
+        Fem = 1-Female
 
+    tech_job1 = df_top_10.occupation[df_top_10.occupation > 0.433].count()/len(user) #this is the value cut for technical profession
+    field=[]
+    tech_job=[]
+    if Input_user.occupation > 0.433:
+        field = 'Technical'
+        tech_job = tech_job1
+    if Input_user.occupation < 0.433:
+        field = 'Non-Technical'
+        tech_job = 1-tech_job1
+
+    #Find which region of the US you live in by zip_codes and see how many users are from the same area
+    location = df_top_10.zip_code[(df_top_10.zip_code > region_nums[0]) & (df_top_10.zip_code < region_nums[1])].count()/len(user)
+    #Within user age +/- 10 years
+    Age = df_top_10.age[(df_top_10.age > ((age/100)-.1)) & (df_top_10.age < ((age/100)+.1))].count()/len(user)
     #average ratings for all movies from top users
     df_top_movies=df_movies.groupby('item_id', as_index=False)['rating'].mean().sort_values('rating', ascending=False)
 
@@ -109,5 +127,6 @@ def get_recommendations(user,sim_users,n_movies,min_rating,genres):
     top_movies = df_item['movie_title'].loc[idx[::]].iloc[list(g)][0:n_movies].values
     ratings = np.round(df_top_movies['rating'].loc[idx[::]].iloc[list(g)][0:n_movies].values,2)
 
-    return(np.dstack((top_movies,ratings))[0],ratings,str(np.round(user_accuracy,2)),str(np.round(Female,2)*100),str(np.round(Age,2)*100), str(np.round(tech_job,2)*100),str(np.round(location,2)*100))
+    return(np.dstack((top_movies,ratings))[0],ratings,str(np.round(user_accuracy,2)),str(np.round(Fem,2)*100),str(np.round(Age,2)*100), str(np.round(tech_job,2)*100),str(np.round(location,2)*100),field,region)
 
+    

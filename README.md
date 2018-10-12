@@ -124,15 +124,17 @@ If you would like to rerun the Keras model to fill in the User x Movie matrix ru
 	
 	python fill_user_matrix.py
 	
-This will build a Keras factorization model to predict previously unrated movies for users with embeddings. The resulting csv file:
+This will build a Keras factorization model to predict previously unrated movies for users with embeddings. The resulting pkl file will be: (also option to generate a csv file)
 
 	predicted_ratings.pkl
+
+This file is already available in the Orient 'Data' folder once you unpack the predicted_ratings.pkl.zip file. 
 	
-While it is not necessary, you can run:
+To generate occupation embeddings you can run:
 	
 	python Word2Vec_occupations.py
 
-To generate occupation embeddings in the resulting csv file (which was provided to you in the repo):
+To generate the csv file (which is also provided to you in the repo, but in the Word2Vec folder):
 
 	Occupation_embeddings.csv
 	
