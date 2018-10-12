@@ -5,24 +5,37 @@
 
 Project Orient is a movie recommendation system where the attributes which determined the recommendations are not only explainable, but actually tunable for the individual consumer. Irrelevant recommendations waste not only the consumer's time but the company's money, but if we put the power of the recommendations in the hands of the user we have a win-win situation. The user is engaged in the platform, while the company is getting relevent data to create better future recommendations. Making the user feel that their time and choices are valued builds trust between a user and a platform and is key to a mutually beneficial relationship and secured success.
 
+<img src='Static/Amber-Orient.jpg' width='430'/> <img src='Static/Amber-Orient (1).jpg' width='430'/> 
+Orient addresses the issues of recommendation algorithms creating negative feedback loops, and allows users to be aware of the profile they are building, and tune it to see the content that interests them.
+
 A Google slide presentation can be found here: [Orient](https://docs.google.com/presentation/d/1KM9ukOajZYONSRcKeBXup8pzwErsF-T0wbBDLuzR5Wc/edit?usp=sharing)
 ______
 
-Example 1) After downloading this repo and follow the installation instuctions below you will be able to experiment with Orient and the explainable/tunable personalized movie recommendations it provides through an interactive command line interface.
+After downloading this repo and follow the installation instuctions below you will be able to experiment with Orient and the explainable/tunable personalized movie recommendations it provides through an interactive command line interface.
 
+The command line interface will prompt you for information and display your results, for example: 
 
+> *Thank you Amber here are your recommendations:*
+> Generating Movie Recommendations...
+> Movies (year) Average Rating:
 
-<img src='Static/Example1.png' width='340'/> 
+	['Return of the Jedi (1983)' 3.8]
+	['Wizard of Oz, The (1939)' 3.78]
+	['Empire Strikes Back, The (1980)' 3.76]
 
-> *Here are the following factors that aided in us recommending you*: 
-***Star Wars***
-  
-    Age: 25%
-    Gender: 25%
-    Occupation: 25%
-    Location: 25%
+> *Would you like to view the factors that led to these particular movie recommendations? [y/N]*: 
+> ***Yes***
+
+> These movies were selected for by using ***10*** similar user profiles for movie recommendations
+> These ***10*** user profiles profiles were ***>97.88%*** similar to your own.
 	
-> *"Would you like to tune these parameters?"*
+	Atrribute breakdown of similar users:
+	Female gender: 80.0%
+	Over the age of 30: 30.0%
+	Technical occupation: 100.0%
+	Westcoast: 40.0%
+	
+> *"Would you like to change how much YOUR attributes contribute to your recommendations? [y/N]?"*
 > ***Yes***
 
     Base my movie recommendations on the following weighted factors:
@@ -31,8 +44,16 @@ Example 1) After downloading this repo and follow the installation instuctions b
     Occupation: 25%
     Location: 25%
     
+Cont...
+______    
+    
+Utimately the goal for Orient would be to have it deployed on an existing media system to aid in recommendations, which might look something like the following:
 
-This system addresses the issues of recommendation algorithms creating negative feedback loops, and allows users to be aware of the profile they are building, and tune it to see the content that interests them.
+##Recommendations
+<img src='Static/Amber-Orient (3).jpg' width='430'/> <img src='Static/Amber-Orient (4).jpg' width='430'/> 
+
+##Explainablity + Tunability
+<img src='Static/Amber-Orient (5).jpg' width='430'/> <img src='Static/Amber-Orient (2).jpg' width='430'/> 
 
 ## Requirements / Dependencies
 
