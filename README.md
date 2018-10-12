@@ -49,11 +49,14 @@ ______
     
 Utimately the goal for Orient would be to have it deployed on an existing media system to aid in recommendations, which might look something like the following:
 
-##Recommendations
+***Recommendations***
+
 <img src='Static/Amber-Orient (3).jpg' width='430'/> <img src='Static/Amber-Orient (4).jpg' width='430'/> 
 
-##Explainablity + Tunability
+***Explainablity + Tunability***
+
 <img src='Static/Amber-Orient (5).jpg' width='430'/> <img src='Static/Amber-Orient (2).jpg' width='430'/> 
+______
 
 ## Requirements / Dependencies
 
