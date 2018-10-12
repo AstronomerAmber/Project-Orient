@@ -8,7 +8,7 @@ Project Orient is a movie recommendation system where the attributes which deter
 A Google slide presentation can be found here: [Orient](https://docs.google.com/presentation/d/1KM9ukOajZYONSRcKeBXup8pzwErsF-T0wbBDLuzR5Wc/edit?usp=sharing)
 
 
-<img src='https://github.com/AstronomerAmber/Project-Orient/blob/dev_organize_files_10102018/Screen%20Shot%202018-10-11%20at%203.52.18%20PM.png' width='640'/> 
+<img src='Static/Example1.png'width='640'/> 
 
 
 > *Here are the following factors that aided in us recommending you*: 
