@@ -6,10 +6,13 @@
 Project Orient is a movie recommendation system where the attributes which determined the recommendations are not only explainable, but actually tunable for the individual consumer. Irrelevant recommendations waste not only the consumer's time but the company's money, but if we put the power of the recommendations in the hands of the user we have a win-win situation. The user is engaged in the platform, while the company is getting relevent data to create better future recommendations. Making the user feel that their time and choices are valued builds trust between a user and a platform and is key to a mutually beneficial relationship and secured success.
 
 A Google slide presentation can be found here: [Orient](https://docs.google.com/presentation/d/1KM9ukOajZYONSRcKeBXup8pzwErsF-T0wbBDLuzR5Wc/edit?usp=sharing)
+______
+
+Example 1) After downloading this repo and follow the installation instuctions below you will be able to experiment with Orient and the explainable/tunable personalized movie recommendations it provides through an interactive command line interface.
 
 
-<img src='Static/Example1.png'width='640'/> 
 
+<img src='Static/Example1.png' width='340'/> 
 
 > *Here are the following factors that aided in us recommending you*: 
 ***Star Wars***
@@ -91,7 +94,7 @@ Do not try and run:
 	
 	Word2Vec_occupations.py
 
-Unless you would like to download Google's [Word2Vec](http://word2vec.googlecode.com/svn/trunk/) tool. It is not necessary for you to run this because the resulting csv file: Occupation_embeddings was provided to you in the repo.
+Unless you would like to download Google's [Word2Vec](http://word2vec.googlecode.com/svn/trunk/) tool. This step is not necessary for you to run this because the resulting csv file: Occupation_embeddings, was provided to you in the repo.
 
 ## Liscensing
 MovieLens Dataset [LICENSE](https://github.com/AstronomerAmber/Project-Orient/edit/master/LICENSE.md)
