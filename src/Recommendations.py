@@ -1,7 +1,14 @@
 
-
-def get_recommendations(gender,age,occupation,location,W_gen,W_age,W_job,W_zip,sim_users,n_movies,min_rating,genres): #,W_gen,W_job,W_zip, genres,age,location,gender,occupation
-
+def get_recommendations(user,sim_users,n_movies,min_rating,genres):
+    
+    gender = user.gender
+    age = user.age
+    occupation = user.occupation
+    location = user.location
+    W_gen = user.weights['gender']
+    W_age = user.weights['age']
+    W_job = user.weights['occupation']
+    W_zip = user.weights['location']
     nearest_nyears = 5
     U_sim = 0.7 #% similarity cut for onehot encoded filter
 
