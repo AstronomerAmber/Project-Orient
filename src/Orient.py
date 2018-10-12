@@ -66,25 +66,25 @@ def dialogue():
     click.clear()
     click.echo(colored('Enter the numbers corresponding to your favorite genres (separate with commas)',Fore.YELLOW))
 
-    genre = ['unknown',
-    'Action',
-    'Adventure',
-    'Animation',
-    'Children\'s',
-    'Comedy',
-    'Crime',
-    'Documentary',
-    'Drama',
-    'Fantasy',
-    'Film-Noir',
-    'Horror',
-    'Musical',
-    'Mystery',
-    'Romance',
-    'Sci-Fi',
-    'Thriller',
-    'War',
-    'Western']
+    genre = ["unknown",
+    "Action",
+    "Adventure",
+    "Animation",
+    "Childrens",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Fantasy",
+    "Film-Noir",
+    "Horror",
+    "Musical",
+    "Mystery",
+    "Romance",
+    "Sci-Fi",
+    "Thriller",
+    "War",
+    "Western"]
 
     for i,g in enumerate(genre):
         click.echo(g+'|'+str(i))
@@ -108,19 +108,20 @@ def dialogue():
 
     user = User_Input(gender,age,job[occupation],location)
 
-    top_movies,ratings,user_accuracy,female_users,age_user, tech_job_users,zip_code_users = recs.get_recommendations(user,sim_users,n_movies,min_rating,genres)
+    top_movies,ratings,user_accuracy,female_users,age_user, tech_job_users,zip_code_users,field,region = recs.get_recommendations(user,sim_users,n_movies,min_rating,genres)
     click.echo(f'Movies (year) Average Rating:\n {top_movies}')
 
 
     if click.confirm(colored(f'Would you like to view the factors that led to these particular movie recommendations?',Fore.MAGENTA)):
         click.clear()
-        click.echo(colored(f'These movies were selected for by using',Fore.YELLOW)+colored(f' {sim_users} ',Fore.CYAN)+colored(f'similar user profiles for movie recommendations',Fore.YELLOW))
-        click.echo(colored(f'These',Fore.GREEN)+colored(f' {sim_users} ',Fore.RED)+colored(f'user profiles profiles were >',Fore.GREEN)+ colored(f'{user_accuracy}% ',Fore.RED) +colored(f'similar to your own.',Fore.GREEN))
+        click.echo(colored(f'These movies were selected for by using',Fore.YELLOW)+colored(f' {sim_users} ',Fore.RED)+colored(f'similar user profiles for movie recommendations',Fore.YELLOW))
+        click.clear()
+        click.echo(colored(f'The',Fore.GREEN)+colored(f' {sim_users} ',Fore.RED)+colored(f'user profiles profiles were >',Fore.GREEN)+ colored(f'{user_accuracy}% ',Fore.RED) +colored(f'similar to your own.',Fore.GREEN))
         click.echo(colored('Atrribute breakdown of similar users:',Fore.CYAN))
-        click.echo(colored(f'Female gender: ',Fore.CYAN)+colored(f'{female_users}%',Fore.RED))
-        click.echo(colored(f'Over the age of 30: ',Fore.CYAN)+colored(f'{age_user}%',Fore.RED))
-        click.echo(colored(f'Technical occupation: ',Fore.CYAN)+colored(f'{tech_job_users}%',Fore.RED))
-        click.echo(colored(f'Westcoast: ',Fore.CYAN)+colored(f'{zip_code_users}%',Fore.RED))
+        click.echo(colored(f'gender:{gender} ',Fore.CYAN)+colored(f'{female_users}%',Fore.RED))
+        click.echo(colored(f'Within {age} ± 10 years: ',Fore.CYAN)+colored(f'{age_user}%',Fore.RED))
+        click.echo(colored(f'{field} occupation: ',Fore.CYAN)+colored(f'{tech_job_users}%',Fore.RED))
+        click.echo(colored(f'{region} region: ',Fore.CYAN)+colored(f'{zip_code_users}%',Fore.RED))
 
     if click.confirm(colored('Would you like to change how much YOUR attributes contribute to your recommendations?',Fore.GREEN)):
         while True:
@@ -138,31 +139,23 @@ def dialogue():
                         sim_users = click.prompt(colored('How many similar user profiles would you like to be compared with? (Default = 10) ',Fore.CYAN), type=int)
                         n_movies = click.prompt(colored('How many movies would you like recommended to you? (Default = 3) ',Fore.MAGENTA), type=int)
                         min_rating = click.prompt(colored('At least how many stars would you like your movie to have? (Default = 3) ',Fore.GREEN), type=int)
-                        click.echo(colored(f'Generating Movie Recommendations...', Fore.CYAN))
                     break
-                    click.echo(colored(f'Generating Movie Recommendations...', Fore.CYAN))
+            click.echo(colored(f'Generating Movie Recommendations...', Fore.CYAN))
             #click.confirm('Would you like to tune another par?').abort
-            top_movies,ratings,user_accuracy,female_users,age_user, tech_job_users,zip_code_users = recs.get_recommendations(user,sim_users,n_movies,min_rating,genres)
+            top_movies,ratings,user_accuracy,female_users,age_user, tech_job_users,zip_code_users,field,region = recs.get_recommendations(user,sim_users,n_movies,min_rating,genres)
             click.echo(f'Movies (year) Average Rating:\n {top_movies}')
             if click.confirm(colored('Would you like to view the factors that led to these particular movie recommendations?',Fore.MAGENTA)):
                 click.clear()
-                click.echo(colored(f'These movies were selected for by using',Fore.YELLOW)+colored(f' {sim_users} ',Fore.RED)+colored(f'similar user profiles for movie recommendations',Fore.YELLOW))
-                click.echo(colored(f'These',Fore.GREEN)+colored(f' {sim_users} ',Fore.RED)+colored(f'user profiles profiles were >',Fore.GREEN)+ colored(f'{user_accuracy}% ',Fore.RED) +colored(f'similar to your own.',Fore.GREEN))
+                click.echo(colored(f'The',Fore.GREEN)+colored(f' {sim_users} ',Fore.RED)+colored(f'user profiles profiles were >',Fore.GREEN)+ colored(f'{user_accuracy}% ',Fore.RED) +colored(f'similar to your own.',Fore.GREEN))
                 click.echo(colored('Atrribute breakdown of similar users:',Fore.CYAN))
-                click.echo(colored(f'Female gender: ',Fore.CYAN)+colored(f'{female_users}%',Fore.RED))
-                click.echo(colored(f'Over the age of 30: ',Fore.CYAN)+colored(f'{age_user}%',Fore.RED))
-                click.echo(colored(f'Technical occupation: ',Fore.CYAN)+colored(f'{tech_job_users}%',Fore.RED))
-                click.echo(colored(f'Westcoast: ',Fore.CYAN)+colored(f'{zip_code_users}%',Fore.RED))
+                click.echo(colored(f'gender:{gender} ',Fore.CYAN)+colored(f'{female_users}%',Fore.RED))
+                click.echo(colored(f'Within {age} ± 10 years: ',Fore.CYAN)+colored(f'{age_user}%',Fore.RED))
+                click.echo(colored(f'{field} occupation: ',Fore.CYAN)+colored(f'{tech_job_users}%',Fore.RED))
+                click.echo(colored(f'{region} region: ',Fore.CYAN)+colored(f'{zip_code_users}%',Fore.RED))
             if not click.confirm(colored('Would you like to change how much YOUR attributes contribute to your recommendations?',Fore.GREEN)):
-                click.echo(colored('Enjoy Your Movies!',Fore.MAGENTA))
                 break
-
-
-
-
-
+    click.echo(colored('Enjoy Your Movies!',Fore.MAGENTA))
 
 
 if __name__ == '__main__':
     dialogue()
-
