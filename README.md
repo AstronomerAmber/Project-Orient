@@ -44,7 +44,7 @@ The command line interface will prompt you for information and display your resu
     Occupation: 25%
     Location: 25%
     
-Cont...
+> *Cont...*
 ______    
     
 Utimately the goal for Orient would be to have it deployed on an existing media system to aid in recommendations, which might look something like the following:
@@ -58,6 +58,17 @@ Utimately the goal for Orient would be to have it deployed on an existing media 
 <img src='Static/Amber-Orient (5).jpg' width='430'/> <img src='Static/Amber-Orient (2).jpg' width='430'/> 
 ______
 
+## Data
+
+Orient is currently using the MovieLens 100K Dataset: 
+
+	100K movie ratings
+	1,682 movies
+	943 users => (Age, Gender, Occupation, Zip code)
+	Released 4/1998
+
+Feel free to download the 1M/10M/20M datasets for a larger variety of recently movies from [MovieLens Dataset](https://grouplens.org/datasets/movielens/), please use with caution as the file stucture may have changed.
+
 ## Requirements / Dependencies
 
 	Python 2.7 or Python 3.6
@@ -65,6 +76,7 @@ ______
 	Click
 	Scikit-learn 
 	Keras (>= 2.0)
+	Pickle (*only if you want to re-run Keras model)
 
 Scikit-learn requires:
 
@@ -82,8 +94,8 @@ The easiest way to download + install this tutorial is by using git from the com
 
 Create new development branch and switch onto it:
 
-	git checkout -b $dev_test/9242018
-	git push origin $dev_test/9242018
+	git checkout -b $dev_test/timestamp
+	git push origin $dev_test/timestamp
 	
 To run them, you also need to install sckit-learn. To install it:
 
@@ -104,21 +116,35 @@ And deactivate it:
 
     source deactivate Orient_3.6 
 
-## Build Environment
- Before running your Orient script:
- 	Fill in the User x Movie matrix by running:
+## Build Environment (***Optional***)
+
+> Before running your Orient.py script:
+ 
+If you would like to rerun the Keras model to fill in the User x Movie matrix run:
 	
 	python fill_user_matrix.py
 	
 This will build a Keras factorization model to predict previously unrated movies for users with embeddings. The resulting csv file:
 
-	predicted_ratings.csv
+	predicted_ratings.pkl
 	
-Do not try and run:
+While it is not necessary, you can run:
 	
-	Word2Vec_occupations.py
+	python Word2Vec_occupations.py
 
-Unless you would like to download Google's [Word2Vec](http://word2vec.googlecode.com/svn/trunk/) tool. This step is not necessary for you to run this because the resulting csv file: Occupation_embeddings, was provided to you in the repo.
+To generate occupation embeddings in the resulting csv file (which was provided to you in the repo):
 
-## Liscensing
+	Occupation_embeddings.csv
+	
+I would only recommend this to those who would like to download Google's [Word2Vec](http://word2vec.googlecode.com/svn/trunk/) tool. 
+
+## Serving Orient
+
+Now you should be all set to get your movie recommendations through the Orient.py interactive command-line interface using:
+
+	Python Orient.py
+	
+Thank you for choosing Orient to optimize your ***Movie Night*** experience!
+
+## Licensing
 MovieLens Dataset [LICENSE](https://github.com/AstronomerAmber/Project-Orient/edit/master/LICENSE.md)
