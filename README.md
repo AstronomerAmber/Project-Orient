@@ -91,6 +91,11 @@ The easiest way to download + install this tutorial is by using git from the com
 	git clone https://github.com/AstronomerAmber/Project-Orient.git
 
 	cd Project-Orient/
+	
+Unzip pickeled data file from command line:
+
+	cd Data/
+	unzip predicted_ratings.pkl.zip
 
 Create new development branch and switch onto it:
 
@@ -144,6 +149,7 @@ I would only recommend this to those who would like to download Google's [Word2V
 
 Now you should be all set to get your movie recommendations through the Orient.py interactive command-line interface using:
 
+	cd src/
 	Python Orient.py
 	
 Thank you for choosing Orient to optimize your ***Movie Night*** experience!
