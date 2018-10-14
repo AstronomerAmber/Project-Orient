@@ -70,19 +70,24 @@ Orient is currently using the MovieLens 100K Dataset:
 Feel free to download the 1M/10M/20M datasets for a larger variety of recently movies from [MovieLens Dataset](https://grouplens.org/datasets/movielens/), please use with caution as the file stucture may have changed.
 
 ## Requirements / Dependencies
-
-	Python 2.7 or Python 3.6
-	Pandas
-	Click
+	Python 3.6
+	Pandas 
+	Click 
+	Colorama 
+	Keras(optional)  
 	Scikit-learn 
-	Keras (>= 2.0)
-	Pickle (*only if you want to re-run Keras model)
-
 Scikit-learn requires:
 
     Python (>= 2.7 or >= 3.3)
     NumPy (>= 1.8.2)
     SciPy (>= 0.13.3)	
+	
+## Package Installations
+	pip install pandas
+	pip install click
+	pip install colorama
+	pip install keras 
+	pip install scikit-learn or pip install sklearn
 
 ## Installation / Setup
 Clone repository and update python path:
@@ -113,7 +118,7 @@ or (if you want GPU support):
 ## Environment
 I recommend creating a conda environoment so you do not destroy your main installation in case you make a mistake somewhere:
 
-    conda create --name Orient_3.6 python=3.6 ipykernal
+    conda create --name Orient_3.6 python=3.6 ipykernel
 You can activate the new environment by running the following (on Linux):
 
     source activate Orient_3.6 
