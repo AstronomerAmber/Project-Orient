@@ -103,12 +103,13 @@ def dialogue():
     sim_users = 10
     n_movies = 3
     min_rating = 3
+    nearest_nyears = 10
 
     click.echo(colored(f'Generating Movie Recommendations...', Fore.CYAN))
 
     user = User_Input(gender,age,job[occupation],location)
 
-    top_movies,ratings,user_accuracy,female_users,age_user, tech_job_users,zip_code_users,field,region = recs.get_recommendations(user,sim_users,n_movies,min_rating,genres)
+    top_movies,ratings,user_accuracy,female_users,age_user, tech_job_users,zip_code_users,field,region = recs.get_recommendations(user,sim_users,n_movies,min_rating,genres,nearest_nyears)
     click.echo(f'Movies (year) Average Rating:\n {top_movies}')
 
 
@@ -125,10 +126,6 @@ def dialogue():
 
     if click.confirm(colored('Would you like to change how much YOUR attributes contribute to your recommendations?',Fore.GREEN)):
         while True:
-            #click.echo(weights['gender'])
-            #click.echo(weights['age'])
-            #click.echo(weights['occupation'])
-            #click.echo(weights['location'])
             while True:
                 selection = click.prompt(colored(f'Which attributes would you like to change (gender, age, occupation, location)?',Fore.YELLOW), type=click.Choice(list(user.weights.keys())))
                 amount = click.prompt(colored(f'Rate how much you would like',Fore.GREEN)+ colored(f' {selection} ',Fore.MAGENTA)+ colored(f'to affect your recommendations on a scale 0-100 (default = 25)',Fore.GREEN), type=click.IntRange(0, 100))
@@ -141,9 +138,10 @@ def dialogue():
                         min_rating = click.prompt(colored('At least how many stars would you like your movie to have? (Default = 3) ',Fore.GREEN), type=int)
                     break
             click.echo(colored(f'Generating Movie Recommendations...', Fore.CYAN))
-            #click.confirm('Would you like to tune another par?').abort
-            top_movies,ratings,user_accuracy,female_users,age_user, tech_job_users,zip_code_users,field,region = recs.get_recommendations(user,sim_users,n_movies,min_rating,genres)
+            top_movies,ratings,user_accuracy,female_users,age_user, tech_job_users,zip_code_users,field,region = recs.get_recommendations(user,sim_users,n_movies,min_rating,genres,nearest_nyears)
             click.echo(f'Movies (year) Average Rating:\n {top_movies}')
+            if n_movies > len(ratings):
+                click.echo(f'Sorry, but we do not {n_movies} movies that meet your criteria.')
             if click.confirm(colored('Would you like to view the factors that led to these particular movie recommendations?',Fore.MAGENTA)):
                 click.clear()
                 click.echo(colored(f'The',Fore.GREEN)+colored(f' {sim_users} ',Fore.RED)+colored(f'user profiles profiles were >',Fore.GREEN)+ colored(f'{user_accuracy}% ',Fore.RED) +colored(f'similar to your own.',Fore.GREEN))
