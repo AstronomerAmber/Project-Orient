@@ -1,5 +1,5 @@
 
-def get_recommendations(user,sim_users,n_movies,min_rating,genres): #,W_gen,W_job,W_zip, genres,age,location,gender,occupation
+def get_recommendations(user,sim_users,n_movies,min_rating,genres,nearest_nyears):
 
     gender = user.gender
     age = user.age
@@ -9,12 +9,17 @@ def get_recommendations(user,sim_users,n_movies,min_rating,genres): #,W_gen,W_jo
     W_age = user.weights['age']
     W_job = user.weights['occupation']
     W_zip = user.weights['location']
-    #genres = ['Action','Adventure']
-    #sim_users = 10
-    #sim_top_movies = 3
-    nearest_nyears = 10
+        
     U_sim = 0.7 #% similarity cut for onehot encoded filter
+    import warnings #ignore warnings from sklearn
 
+    def fxn():
+        warnings.warn("deprecated", DeprecationWarning)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        fxn()
+        
     from sklearn.metrics.pairwise import cosine_similarity
     import numpy as np
     import pandas as pd
