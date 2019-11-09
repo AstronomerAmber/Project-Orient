@@ -1,6 +1,8 @@
 # Orient 
 *We Come Highly Recommended*
 
+SEE [BLOG POST](https://blog.insightdatascience.com/tunable-and-explainable-recommender-systems-cd52b6287bad)
+
 ## Project description
 
 Project Orient is a movie recommendation system where the attributes which determined the recommendations are not only explainable, but actually tunable for the individual consumer. Irrelevant recommendations waste not only the consumer's time but the company's money, but if we put the power of the recommendations in the hands of the user we have a win-win situation. The user is engaged in the platform, while the company is getting relevent data to create better future recommendations. Making the user feel that their time and choices are valued builds trust between a user and a platform and is key to a mutually beneficial relationship and secured success.
